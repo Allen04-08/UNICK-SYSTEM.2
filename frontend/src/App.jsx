@@ -45,7 +45,7 @@ export default function App() {
   }
 
   const handleLogout = async () => {
-    try { await api.post('/auth/logout') } catch {}
+    try { await api.post('/auth/logout') } catch (e) { console.debug('Logout failed:', e) }
     localStorage.removeItem('token')
     setToken('')
     setUser(null)

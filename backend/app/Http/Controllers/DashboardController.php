@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $ordersToday = Order::whereDate('created_at', today())->count();
         $revenueMonth = Order::whereMonth('created_at', now()->month)->sum('total');
         $batchesInProgress = ProductionBatch::where('status', 'in_progress')->count();
-        $lowStockCount = Product::whereColumn('stock_on_hand', '<=', DB::raw('reorder_point + safety_stock'))->count();
+        $lowStockCount = Product::whereRaw('stock_on_hand <= reorder_point + safety_stock')->count();
 
         return response()->json([
             'orders_today' => $ordersToday,
