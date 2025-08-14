@@ -1,0 +1,72 @@
+/* Woodcraft theme */
+:root {
+  --wood-brown-800: #3f2f24;
+  --wood-brown-700: #4a372a;
+  --wood-brown-600: #5a4030;
+  --wood-brown: #6f4f37;
+  --accent-amber: #d4a373;
+  --wood-cream: #f4eee6;
+  --text-dark: #2b2b2b;
+}
+
+html, body {
+  background: var(--wood-cream);
+  color: var(--text-dark);
+}
+
+.bg-wood {
+  background: linear-gradient(180deg, var(--wood-brown-700), var(--wood-brown-800));
+}
+
+.btn-wood {
+  background-color: var(--wood-brown);
+  border-color: var(--wood-brown-600);
+  color: #fff;
+}
+.btn-wood:hover,
+.btn-wood:focus {
+  background-color: #8b5e42;
+  border-color: #764a35;
+  color: #fff;
+}
+
+.hero-wood {
+  background:
+    radial-gradient(1000px 300px at -10% 0%, rgba(255, 255, 255, 0.15), transparent 70%),
+    radial-gradient(800px 300px at 110% -20%, rgba(255, 255, 255, 0.09), transparent 70%),
+    linear-gradient(135deg, #59402f, #3d2e24);
+  color: #fff;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+}
+
+.product-card {
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  transition: transform .15s ease, box-shadow .15s ease;
+  overflow: hidden;
+  background: #fff;
+}
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+.product-card .product-media {
+  background:
+    repeating-linear-gradient(45deg, #6b4f3a 0, #6b4f3a 10px, #5a4030 10px, #5a4030 20px);
+  filter: saturate(.9) contrast(1.05);
+}
+.product-card .badge-type {
+  background: rgba(212, 163, 115, 0.15);
+  color: var(--wood-brown);
+}
+.product-card .price {
+  font-weight: 700;
+  color: var(--wood-brown-700);
+}
+
+.footer-wood {
+  background: linear-gradient(180deg, var(--wood-brown-800), var(--wood-brown-700));
+  color: #f9f7f4;
+}
