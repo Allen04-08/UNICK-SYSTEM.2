@@ -15,7 +15,7 @@ export default function Login({ onLogin }) {
     try {
       await onLogin(email, password)
       navigate('/')
-    } catch (err) {
+    } catch {
       setError('Login failed')
     } finally {
       setIsLoading(false)
