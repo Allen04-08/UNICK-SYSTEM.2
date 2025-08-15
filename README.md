@@ -12,6 +12,7 @@ Prerequisites: PHP 8.2+, Composer, Node 18+, MySQL 8+
 1. Backend
 ```
 cd backend
+composer install --ignore-platform-req=ext-gd --ignore-platform-req=php-64bit (kapag hindi makapg install ng composer)
 cp .env.example .env
 php artisan key:generate
 # Configure DB in .env (DB_CONNECTION=mysql, DB_DATABASE, DB_USERNAME, DB_PASSWORD)
