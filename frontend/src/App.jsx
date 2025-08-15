@@ -32,7 +32,7 @@ export default function App() {
         if (isActive) setUser(null)
       }
     }
-    check()
+        check()
     return () => { isActive = false }
   }, [token])
 
@@ -44,7 +44,6 @@ export default function App() {
     setToken(newToken || '')
     setUser(newUser || null)
   }
-
   const handleLogout = async () => {
     try { await api.post('/auth/logout') } catch (e) { console.debug('Logout failed:', e) }
     localStorage.removeItem('token')
@@ -65,42 +64,46 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <nav className="navbar navbar-expand navbar-dark bg-wood">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Unick Woodcraft</Link>
-          <div className="navbar-nav">
-            <Link className="nav-link" to="/">Catalog</Link>
-            <Link className="nav-link" to="/cart">Cart</Link>
-            <Link className="nav-link" to="/customer">My Dashboard</Link>
-            {isStaff && <Link className="nav-link" to="/admin">Admin</Link>}
+      <div className="d-flex" style={{ minHeight: '100vh' }}>
+        {/* Sidebar */}
+        <aside className="bg-wood text-light p-3 d-flex flex-column" style={{ width: 220 }}>
+          <div className="mb-4">
+            <Link className="navbar-brand text-light fs-4" to="/">Unick Woodcraft</Link>
           </div>
-          <div className="ms-auto navbar-nav">
-            {!user && <Link className="nav-link" to="/login">Login</Link>}
-            {!user && <Link className="nav-link" to="/register">Register</Link>}
+          <div className="nav flex-column mb-4">
+            <Link className="nav-link text-light" to="/">Catalog</Link>
+            <Link className="nav-link text-light" to="/cart">Cart</Link>
+            <Link className="nav-link text-light" to="/customer">My Dashboard</Link>
+            {isStaff && <Link className="nav-link text-light" to="/admin">Admin</Link>}
+          </div>
+          <div className="mt-auto">
+            {!user && <Link className="nav-link text-light" to="/login">Login</Link>}
+            {!user && <Link className="nav-link text-light" to="/register">Register</Link>}
             {user && <span className="navbar-text me-2">Hi, {user.name}</span>}
-            {user && <button className="btn btn-sm btn-outline-light" onClick={handleLogout}>Logout</button>}
+            {user && <button className="btn btn-sm btn-outline-light mt-2" onClick={handleLogout}>Logout</button>}
           </div>
+        </aside>
+        {/* Main Content */}
+        <div className="flex-grow-1 container py-4">
+          <Routes>
+            <Route path="/" element={<ProductCatalog />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/customer" element={<RequireAuth><CustomerDashboard /></RequireAuth>} />
+
+            <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/" />} />
+            <Route path="/register" element={<Register />} />
+
+            <Route path="/admin" element={<RequireStaff><AdminDashboard /></RequireStaff>} />
+            <Route path="/admin/inventory" element={<RequireStaff><InventoryPage /></RequireStaff>} />
+            <Route path="/admin/orders" element={<RequireStaff><OrderPage /></RequireStaff>} />
+            <Route path="/admin/production" element={<RequireStaff><ProductionPage /></RequireStaff>} />
+            <Route path="/admin/reports" element={<RequireStaff><Report /></RequireStaff>} />
+
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+          <Footer />
         </div>
-      </nav>
-      <div className="container py-4">
-        <Routes>
-          <Route path="/" element={<ProductCatalog />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/customer" element={<RequireAuth><CustomerDashboard /></RequireAuth>} />
-
-          <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/" />} />
-          <Route path="/register" element={<Register />} />
-
-          <Route path="/admin" element={<RequireStaff><AdminDashboard /></RequireStaff>} />
-          <Route path="/admin/inventory" element={<RequireStaff><InventoryPage /></RequireStaff>} />
-          <Route path="/admin/orders" element={<RequireStaff><OrderPage /></RequireStaff>} />
-          <Route path="/admin/production" element={<RequireStaff><ProductionPage /></RequireStaff>} />
-          <Route path="/admin/reports" element={<RequireStaff><Report /></RequireStaff>} />
-
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
       </div>
-      <Footer />
     </BrowserRouter>
   )
 }

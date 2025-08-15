@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('order_number')->unique();
             $table->enum('status', ['pending','confirmed','in_production','completed','cancelled'])->default('pending')->index();
-            $table->unsignedDecimal('subtotal', 12, 2)->default(0);
-            $table->unsignedDecimal('tax', 12, 2)->default(0);
-            $table->unsignedDecimal('total', 12, 2)->default(0);
+            $table->decimal('subtotal', 12, 2)->default(0);
+            $table->decimal('tax', 12, 2)->default(0);
+            $table->decimal('total', 12, 2)->default(0);
             $table->string('shipping_address')->nullable();
             $table->string('billing_address')->nullable();
             $table->timestamps();

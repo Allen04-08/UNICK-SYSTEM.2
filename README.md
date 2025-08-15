@@ -23,7 +23,7 @@ php artisan serve --host=0.0.0.0 --port=8000
 2. Frontend
 ```
 cd ../frontend
-npm i
+npm install vite @vitejs/plugin-react --save-dev
 npm start
 
 ```

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('reorder_point')->default(0);
             $table->unsignedInteger('safety_stock')->default(0);
             $table->unsignedInteger('lead_time_days')->default(0);
-            $table->unsignedDecimal('unit_price', 12, 2)->default(0);
+            $table->decimal('unit_price', 12, 2)->default(0);
             $table->unsignedInteger('stock_on_hand')->default(0);
             $table->unsignedInteger('stock_allocated')->default(0);
             $table->timestamps();
