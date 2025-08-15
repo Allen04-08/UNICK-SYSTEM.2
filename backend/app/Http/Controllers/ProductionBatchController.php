@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductionBatchRequest;
 use App\Http\Resources\ProductionBatchResource;
 use App\Models\ProductionBatch;
+use App\Services\ProductionService;
 use Illuminate\Http\Request;
 
 class ProductionBatchController extends Controller
@@ -36,6 +37,16 @@ class ProductionBatchController extends Controller
         $this->authorize('update', $batch);
         $batch->update($request->validated());
         return new ProductionBatchResource($batch->load('product','currentStage'));
+    }
+
+    public function complete(Request $request, ProductionBatch $batch, ProductionService $productionService)
+    {
+        $this->authorize('update', $batch);
+        $qty = (int) $request->input('quantity_completed', 0);
+        $stageId = $request->input('stage_id');
+        $note = $request->input('note');
+        $batch = $productionService->completeProduction($batch, $qty, $stageId, $note);
+        return new ProductionBatchResource($batch);
     }
 
     public function destroy(ProductionBatch $batch)

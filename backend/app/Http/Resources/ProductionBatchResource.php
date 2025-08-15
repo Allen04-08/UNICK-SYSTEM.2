@@ -12,11 +12,7 @@ class ProductionBatchResource extends JsonResource
         return [
             'id' => $this->id,
             'batch_number' => $this->batch_number,
-            'product' => [
-                'id' => $this->product->id ?? null,
-                'sku' => $this->product->sku ?? null,
-                'name' => $this->product->name ?? null,
-            ],
+            'product' => new ProductResource($this->whenLoaded('product') ? $this->product : $this->product),
             'quantity_planned' => $this->quantity_planned,
             'quantity_completed' => $this->quantity_completed,
             'current_stage' => $this->currentStage?->name,

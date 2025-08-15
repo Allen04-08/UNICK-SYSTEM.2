@@ -69,6 +69,9 @@ class OrderController extends Controller
             $order->total = round($order->subtotal + $order->tax, 2);
             $order->save();
 
+            // After items saved, trigger MRP planning for shortages
+            app(\App\Services\MRPService::class)->planProductionForShortages($order);
+
             return $order->load('items.product','user');
         });
 
