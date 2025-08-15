@@ -15,6 +15,7 @@ import Cart from './components/Customers/Cart'
 
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
+import Footer from './components/Common/Footer'
 
 export default function App() {
   const [user, setUser] = React.useState(null)
@@ -45,7 +46,7 @@ export default function App() {
   }
 
   const handleLogout = async () => {
-    try { await api.post('/auth/logout') } catch {}
+    try { await api.post('/auth/logout') } catch (e) { console.debug('Logout failed:', e) }
     localStorage.removeItem('token')
     setToken('')
     setUser(null)
@@ -64,9 +65,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <nav className="navbar navbar-expand navbar-dark bg-wood">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Unick</Link>
+          <Link className="navbar-brand" to="/">Unick Woodcraft</Link>
           <div className="navbar-nav">
             <Link className="nav-link" to="/">Catalog</Link>
             <Link className="nav-link" to="/cart">Cart</Link>
@@ -99,6 +100,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
+      <Footer />
     </BrowserRouter>
   )
 }

@@ -25,7 +25,7 @@ class ReportController extends Controller
     public function inventory()
     {
         $this->authorize('viewAny', InventoryMovement::class);
-        $lowStock = Product::whereColumn('stock_on_hand', '<=', DB::raw('reorder_point + safety_stock'))
+        $lowStock = Product::whereRaw('stock_on_hand <= reorder_point + safety_stock')
             ->orderBy('stock_on_hand')
             ->limit(20)
             ->get();
