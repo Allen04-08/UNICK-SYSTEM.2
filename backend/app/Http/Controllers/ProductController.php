@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\ForecastService;
+use App\Services\MRPService;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 
@@ -43,5 +45,13 @@ class ProductController extends Controller
         $product->delete();
         activity()->performedOn($product)->causedBy(auth()->user())->log('product_deleted');
         return response()->noContent();
+    }
+
+    public function forecast(Product $product, ForecastService $forecastService, MRPService $mrpService)
+    {
+        $this->authorize('view', $product);
+        $data = $forecastService->demandForecastForProduct($product);
+        $stock = $mrpService->computeStockStatus($product, $data['daily_demand']);
+        return response()->json(['forecast' => $data, 'stock' => $stock]);
     }
 }

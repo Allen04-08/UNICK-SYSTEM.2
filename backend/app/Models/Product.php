@@ -26,6 +26,11 @@ class Product extends Model
         return $this->hasMany(ProductionBatch::class);
     }
 
+    public function boms(): HasMany
+    {
+        return $this->hasMany(Bom::class);
+    }
+
     public function getStockAvailableAttribute(): int
     {
         return max(0, (int) $this->stock_on_hand - (int) $this->stock_allocated);
